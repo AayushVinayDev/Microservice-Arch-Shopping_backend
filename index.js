@@ -1,16 +1,13 @@
 const express = require("express");
-const cors = require("cors");
-const proxy = require("express-http-proxy");
 
 const app = express();
 
-app.use(cors());
 app.use(express.json());
 
-app.use("/customer", proxy("http://localhost:8001"));
-app.use("/shopping", proxy("http://localhost:8002"));
-app.use("/", proxy("http://localhost:8003")); // redirect to product as homepage
+app.get("/", (req, res) => {
+  return res.status(200).json({ msg: "Hello World!" });
+});
 
-app.listen(8000, () => {
-  console.log("gateway listening on port 8000!");
+app.listen(8002, () => {
+  console.log("shopping listening on port 8002!");
 });
